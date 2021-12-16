@@ -1,0 +1,41 @@
+create database db_polite_learning;
+use db_polite_learning;
+
+-- tabela será populada com postagens como de outras redes sociais, por exemplo: Facebook ou LinkedIn
+CREATE TABLE `tb_post` ( 
+	`id_post` bigInt NOT NULL AUTO_INCREMENT,
+	`titulo` varchar(255) NOT NULL,
+	`conteudo` varchar(255) NOT NULL,
+	`data` DATE NOT NULL,
+	`imagem` varchar(255) NOT NULL,
+	`fk_tema` bigInt NOT NULL,
+	`fk_usuario` bigInt NOT NULL,
+	PRIMARY KEY (`id_post`)
+);
+
+-- Tabela será populada com os temas referentes ao ensino infantil como: alimentação, 
+-- recreação infantil e ensino básico(colocar detalhes sobre cada um desses ensinos básicos)
+
+CREATE TABLE `tb_tema` ( 
+	`id_tema` bigInt NOT NULL AUTO_INCREMENT,
+	`descricao` varchar(255) NOT NULL,
+	`imagem` varchar(255) NOT NULL,
+	`relacionados` varchar(255) NOT NULL,
+	PRIMARY KEY (`id_tema`)
+);
+
+-- Tabela será populada com as informações necessárias para o usuário responsável pela criança efetuar seu login
+CREATE TABLE `tb_usuario` (
+	`id_usuario` bigInt NOT NULL AUTO_INCREMENT,
+	`nome_completo` varchar(255) NOT NULL,
+	`email` varchar(255) NOT NULL UNIQUE,
+	`senha` varchar(255) NOT NULL,
+	PRIMARY KEY (`id_usuario`)
+);
+
+ALTER TABLE `tb_post` ADD CONSTRAINT `tb_post_fk0` FOREIGN KEY (`fk_tema`) REFERENCES `tb_tema`(`id_tema`);
+
+ALTER TABLE `tb_post` ADD CONSTRAINT `tb_post_fk1` FOREIGN KEY (`fk_usuario`) REFERENCES `tb_usuario`(`id_usuario`);
+
+
+select * from tb_post inner join tb_tema on tb_tema.id_tema = tb_post.fk_tema inner join tb_usuario on tb_usuario.id_usuario = tb_post.fk_usuario;usuario;
